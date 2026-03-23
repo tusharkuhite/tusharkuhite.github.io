@@ -1,911 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tushar Kuhite - Laravel Web Developer</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #3498db;
-            --secondary: #2c3e50;
-            --accent: #e74c3c;
-            --light: #ecf0f1;
-            --dark: #2c3e50;
-            --gray: #95a5a6;
-            --success: #2ecc71;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f9f9f9;
-            overflow-x: hidden;
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header & Navigation */
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-        
-        header.scrolled {
-            background: rgba(255, 255, 255, 0.98);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            padding: 10px 0;
-        }
-        
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--secondary);
-            text-decoration: none;
-        }
-        
-        .logo span {
-            color: var(--primary);
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 30px;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-        
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-        
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: var(--primary);
-            transition: width 0.3s ease;
-        }
-        
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-        
-        .mobile-menu {
-            display: none;
-            font-size: 24px;
-            cursor: pointer;
-        }
-        
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" opacity="0.1"><polygon fill="white" points="0,1000 1000,0 1000,1000"/></svg>');
-            background-size: cover;
-        }
-        
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 600px;
-        }
-        
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 15px;
-            line-height: 1.2;
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
-        }
-        
-        .highlight {
-            color: var(--primary);
-            font-weight: 600;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
-            background: #2980b9;
-        }
-        
-        .btn-outline {
-            background: transparent;
-            border: 2px solid white;
-            margin-left: 15px;
-        }
-        
-        .btn-outline:hover {
-            background: white;
-            color: var(--primary);
-        }
-        
-        /* Sections */
-        section {
-            padding: 100px 0;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .section-title h2 {
-            font-size: 2.5rem;
-            color: var(--secondary);
-            position: relative;
-            display: inline-block;
-            margin-bottom: 15px;
-        }
-        
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            width: 70px;
-            height: 4px;
-            background: var(--primary);
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 2px;
-        }
-        
-        .section-title p {
-            color: var(--gray);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        /* About Section */
-        .about-content {
-            display: flex;
-            align-items: center;
-            gap: 50px;
-        }
-        
-        .about-img {
-            flex: 1;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .about-img img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.5s ease;
-        }
-        
-        .about-img:hover img {
-            transform: scale(1.05);
-        }
-        
-        .about-text {
-            flex: 1;
-        }
-        
-        .about-text h3 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: var(--secondary);
-        }
-        
-        .about-text p {
-            margin-bottom: 20px;
-            color: #555;
-        }
-        
-        .skills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        
-        .skill {
-            background: var(--light);
-            padding: 8px 15px;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-        
-        /* Services Section */
-        .services {
-            background: var(--light);
-        }
-        
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .service-card {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-        
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .service-icon {
-            width: 70px;
-            height: 70px;
-            background: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            color: white;
-            font-size: 1.8rem;
-        }
-        
-        .service-card h3 {
-            margin-bottom: 15px;
-            color: var(--secondary);
-        }
-        
-        /* Projects Section */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .project-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .project-img {
-            height: 200px;
-            overflow: hidden;
-        }
-        
-        .project-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        
-        .project-card:hover .project-img img {
-            transform: scale(1.1);
-        }
-        
-        .project-content {
-            padding: 20px;
-        }
-        
-        .project-content h3 {
-            margin-bottom: 10px;
-            color: var(--secondary);
-        }
-        
-        .project-content p {
-            color: var(--gray);
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-        }
-        
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-        
-        .project-tag {
-            background: var(--light);
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: var(--dark);
-        }
-        
-        /* Contact Section */
-        .contact {
-            background: var(--secondary);
-            color: white;
-        }
-        
-        .contact .section-title h2 {
-            color: white;
-        }
-        
-        .contact .section-title p {
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        .contact-content {
-            display: flex;
-            gap: 50px;
-        }
-        
-        .contact-info {
-            flex: 1;
-        }
-        
-        .contact-form {
-            flex: 1;
-        }
-        
-        .contact-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-        
-        .contact-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            font-size: 1.2rem;
-        }
-        
-        .contact-details h3 {
-            margin-bottom: 5px;
-        }
-        
-        .contact-details p {
-            opacity: 0.8;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-            color: white;
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-        }
-        
-        textarea.form-control {
-            min-height: 150px;
-            resize: vertical;
-        }
-        
-        /* Footer */
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 50px 0 20px;
-        }
-        
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 40px;
-        }
-        
-        .footer-logo {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-        
-        .footer-links {
-            display: flex;
-            gap: 30px;
-        }
-        
-        .footer-links-column h3 {
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-        }
-        
-        .footer-links-column ul {
-            list-style: none;
-        }
-        
-        .footer-links-column ul li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-links-column a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .footer-links-column a:hover {
-            color: white;
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .social-link {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        
-        .social-link:hover {
-            background: var(--primary);
-            transform: translateY(-3px);
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.9rem;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .about-content {
-                flex-direction: column;
-            }
-            
-            .contact-content {
-                flex-direction: column;
-            }
-            
-            .footer-content {
-                flex-direction: column;
-                gap: 40px;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .mobile-menu {
-                display: block;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            section {
-                padding: 70px 0;
-            }
-        }
-        
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .fade-in {
-            animation: fadeIn 1s ease forwards;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tushar Kuhite - Laravel Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+    --primary:#3498db;
+    --secondary:#2c3e50;
+    --accent:#e74c3c;
+    --light:rgba(255,255,255,0.1);
+    --dark:#1c1c1c;
+    --glass:#ffffff20;
+    --glass-blur:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Poppins',sans-serif;background:#f0f2f5;color:#333;line-height:1.6;}
+a{text-decoration:none;color:inherit;}
+.container{width:90%;max-width:1200px;margin:0 auto;}
+
+/* Header */
+header{position:fixed;width:100%;top:0;left:0;z-index:1000;backdrop-filter:blur(10px);background:var(--glass);padding:15px 0;transition:0.3s;box-shadow:0 5px 20px rgba(0,0,0,0.05);}
+header.scrolled{background:var(--glass);box-shadow:0 10px 30px rgba(0,0,0,0.1);}
+.nav-container{display:flex;justify-content:space-between;align-items:center;}
+.logo{font-weight:700;font-size:1.8rem;color:var(--secondary);}
+.logo span{color:var(--primary);}
+.nav-links{display:flex;list-style:none;}
+.nav-links li{margin-left:25px;}
+.nav-links a{font-weight:500;color:var(--secondary);position:relative;}
+.nav-links a::after{content:'';position:absolute;width:0;height:2px;bottom:-4px;left:0;background:var(--primary);transition:0.3s;}
+.nav-links a:hover::after{width:100%;}
+.mobile-menu{display:none;font-size:24px;cursor:pointer;}
+
+/* Hero */
+.hero{height:100vh;display:flex;align-items:center;background:linear-gradient(135deg,#667eea,#764ba2);color:white;text-align:center;flex-direction:column;justify-content:center;}
+.hero h1{font-size:3rem;margin-bottom:15px;}
+.hero p{font-size:1.2rem;margin-bottom:30px;max-width:600px;opacity:0.9;}
+.btn{display:inline-block;padding:12px 30px;background:var(--primary);color:white;border-radius:8px;font-weight:600;transition:0.3s;cursor:pointer;margin:5px;}
+.btn:hover{transform:translateY(-3px);background:#2980b9;}
+
+/* Sections */
+section{padding:100px 0;}
+.section-title{text-align:center;margin-bottom:60px;}
+.section-title h2{font-size:2.5rem;color:var(--secondary);position:relative;display:inline-block;font-weight:700;}
+.section-title h2::after{content:'';position:absolute;width:70px;height:4px;background:var(--primary);bottom:-10px;left:50%;transform:translateX(-50%);border-radius:2px;}
+.section-title p{color:#666;max-width:600px;margin:0 auto;}
+
+/* About */
+.about-content{display:flex;align-items:center;gap:50px;flex-wrap:wrap;}
+.about-img{flex:1;border-radius:15px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.1);}
+.about-img img{width:100%;display:block;transition:0.5s;}
+.about-img:hover img{transform:scale(1.05);}
+.about-text{flex:1;}
+.about-text h3{font-size:1.8rem;margin-bottom:20px;color:var(--secondary);}
+.about-text p{margin-bottom:15px;color:#555;}
+.skills{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;}
+.skill{background:var(--glass);backdrop-filter:blur(var(--glass-blur));padding:8px 15px;border-radius:30px;font-size:0.9rem;font-weight:500;color:white;}
+
+/* Why Hire Me */
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px;}
+.service-card{background:var(--glass);backdrop-filter:blur(var(--glass-blur));padding:30px;border-radius:15px;transition:0.3s;text-align:center;box-shadow:0 5px 20px rgba(0,0,0,0.1);}
+.service-card:hover{transform:translateY(-10px);box-shadow:0 15px 30px rgba(0,0,0,0.2);}
+.service-card h3{margin-bottom:15px;color:white;}
+
+/* Projects */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;}
+.project-card{background:var(--glass);backdrop-filter:blur(var(--glass-blur));border-radius:15px;overflow:hidden;transition:0.3s;box-shadow:0 5px 20px rgba(0,0,0,0.1);}
+.project-card:hover{transform:translateY(-10px);box-shadow:0 15px 30px rgba(0,0,0,0.2);}
+.project-img{height:180px;overflow:hidden;}
+.project-img img{width:100%;height:100%;object-fit:cover;transition:0.5s;}
+.project-card:hover .project-img img{transform:scale(1.1);}
+.project-content{padding:20px;}
+.project-content h3{margin-bottom:10px;color:white;}
+.project-content p{color:#ccc;font-size:0.9rem;margin-bottom:10px;}
+.project-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.project-tag{background:var(--primary);padding:5px 10px;border-radius:20px;font-size:0.8rem;color:white;}
+
+/* Contact */
+.contact{background:var(--secondary);color:white;}
+.contact .section-title h2{color:white;}
+.contact .section-title p{color:rgba(255,255,255,0.7);}
+.contact-content{display:flex;gap:50px;flex-wrap:wrap;}
+.contact-info{flex:1;}
+.contact-item{display:flex;align-items:center;margin-bottom:25px;}
+.contact-icon{width:50px;height:50px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-right:15px;font-size:1.2rem;}
+.contact-details h3{margin-bottom:5px;color:white;}
+.contact-details p{opacity:0.8;}
+.contact-form{flex:1;}
+.form-group{margin-bottom:20px;}
+.form-control{width:100%;padding:12px 15px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:5px;color:white;}
+.form-control::placeholder{color:rgba(255,255,255,0.6);}
+textarea.form-control{min-height:150px;resize:vertical;}
+
+/* Footer */
+footer{background:var(--dark);color:white;padding:50px 0 20px;}
+.footer-content{display:flex;justify-content:space-between;flex-wrap:wrap;gap:40px;margin-bottom:40px;}
+.footer-logo{font-size:24px;font-weight:700;margin-bottom:15px;}
+.footer-links-column h3{margin-bottom:20px;font-size:1.2rem;}
+.footer-links-column ul{list-style:none;}
+.footer-links-column ul li{margin-bottom:10px;}
+.footer-links-column a{color:rgba(255,255,255,0.7);transition:0.3s;}
+.footer-links-column a:hover{color:white;}
+.social-links{display:flex;gap:15px;margin-top:20px;}
+.social-link{width:40px;height:40px;background:rgba(255,255,255,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;transition:0.3s;}
+.social-link:hover{background:var(--primary);transform:translateY(-3px);}
+.copyright{text-align:center;padding-top:20px;border-top:1px solid rgba(255,255,255,0.1);color: rgba(255,255,255,0.5);font-size:0.9rem;}
+
+/* Responsive */
+@media(max-width:992px){.about-content,.contact-content{flex-direction:column;}.hero h1{font-size:2.5rem;}}
+@media(max-width:768px){.nav-links{display:none;}.mobile-menu{display:block;}}
+</style>
 </head>
 <body>
-    <!-- Header -->
-    <header id="header">
-        <div class="container">
-            <div class="nav-container">
-                <a href="#" class="logo">Tushar<span>.</span></a>
-                <ul class="nav-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-                <div class="mobile-menu">
-                    <i class="fas fa-bars"></i>
-                </div>
-            </div>
-        </div>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="container">
-            <div class="hero-content fade-in">
-                <h1>Laravel Web Developer</h1>
-                <p>I'm <span class="highlight">Tushar Kuhite</span>, a passionate Laravel developer specializing in building scalable web applications with modern technologies.</p>
-                <div class="hero-buttons">
-                    <a href="#projects" class="btn">View My Work</a>
-                    <a href="#contact" class="btn btn-outline">Get In Touch</a>
-                </div>
-            </div>
-        </div>
-    </section>
+<header id="header">
+<div class="container">
+    <div class="nav-container">
+        <a href="#" class="logo">Tushar<span>.</span></a>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Why Hire Me</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="mobile-menu"><i class="fas fa-bars"></i></div>
+    </div>
+</div>
+</header>
 
-    <!-- About Section -->
-    <section id="about">
-        <div class="container">
-            <div class="section-title">
-                <h2>About Me</h2>
-                <p>Get to know more about my skills and experience</p>
-            </div>
-            <div class="about-content">
-                <div class="about-img">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Tushar Kuhite">
-                </div>
-                <div class="about-text">
-                    <h3>Hi, I'm Tushar Kuhite</h3>
-                    <p>Laravel Developer with hands-on experience in developing and maintaining scalable HR and ATS-based web applications. Skilled in PHP, Laravel, MySQL, and front-end technologies with strong problem-solving and teamwork abilities.</p>
-                    <p>Proven success in building complete HR solutions including recruitment, employee management, and assessment systems.</p>
-                    <div class="skills">
-                        <span class="skill">PHP</span>
-                        <span class="skill">Laravel</span>
-                        <span class="skill">MySQL</span>
-                        <span class="skill">JavaScript</span>
-                        <span class="skill">jQuery</span>
-                        <span class="skill">HTML5</span>
-                        <span class="skill">CSS3</span>
-                        <span class="skill">Git</span>
-                        <span class="skill">REST API</span>
-                        <span class="skill">MVC Architecture</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<section class="hero" id="home">
+<h1>Laravel Developer with 3+ Years Experience</h1>
+<p>I'm <span style="color:#ffd700;">Tushar Kuhite</span>, building scalable web applications with Laravel, MySQL, and REST APIs.</p>
+<a href="#projects" class="btn">View Projects</a>
+<a href="#contact" class="btn">Hire Me</a>
+</section>
 
-    <!-- Services Section -->
-    <section class="services" id="services">
-        <div class="container">
-            <div class="section-title">
-                <h2>My Services</h2>
-                <p>What I can do for you</p>
-            </div>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Web Development</h3>
-                    <p>Building responsive and scalable web applications using Laravel, PHP, and modern frontend technologies.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h3>Database Design</h3>
-                    <p>Designing efficient database structures and optimizing queries for better performance.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>API Development</h3>
-                    <p>Creating robust REST APIs for web and mobile applications with proper documentation.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<section id="about">
+<div class="container">
+<div class="section-title"><h2>About Me</h2><p>Get to know more about my skills and experience</p></div>
+<div class="about-content">
+<div class="about-img"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=687&q=80" alt="Tushar Kuhite"></div>
+<div class="about-text">
+<h3>Hi, I'm Tushar Kuhite</h3>
+<p>Laravel Developer experienced in building HR & ATS web applications from scratch, optimizing database performance, and creating secure APIs.</p>
+<p>Strong in PHP, Laravel, MySQL, REST APIs, and front-end technologies. Collaborative and solution-oriented developer.</p>
+<div class="skills">
+<span class="skill">Laravel</span>
+<span class="skill">PHP</span>
+<span class="skill">MySQL</span>
+<span class="skill">REST API</span>
+<span class="skill">Authentication</span>
+<span class="skill">MVC</span>
+<span class="skill">Git</span>
+</div>
+</div>
+</div>
+</div>
+</section>
 
-    <!-- Projects Section -->
-    <section id="projects">
-        <div class="container">
-            <div class="section-title">
-                <h2>My Projects</h2>
-                <p>Some of my recent work</p>
-            </div>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="ATS Project">
-                    </div>
-                    <div class="project-content">
-                        <h3>Application Tracking System</h3>
-                        <p>Recruitment management system covering job posts, applicants, interviews, and reports.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">Laravel</span>
-                            <span class="project-tag">MySQL</span>
-                            <span class="project-tag">JavaScript</span>
-                        </div>
-                        <a href="#" class="btn">View Details</a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="HR Portal">
-                    </div>
-                    <div class="project-content">
-                        <h3>HR Portal</h3>
-                        <p>Manages employee lifecycle including onboarding, attendance, payroll, and leave management.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">Laravel</span>
-                            <span class="project-tag">MySQL</span>
-                            <span class="project-tag">Bootstrap</span>
-                        </div>
-                        <a href="#" class="btn">View Details</a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="https://images.unsplash.com/photo-1543286386-713bdd548da4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Assessment System">
-                    </div>
-                    <div class="project-content">
-                        <h3>Assessment Management System</h3>
-                        <p>Automates employee skill assessments and evaluation reports with detailed analytics.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">Laravel</span>
-                            <span class="project-tag">JavaScript</span>
-                            <span class="project-tag">Charts.js</span>
-                        </div>
-                        <a href="#" class="btn">View Details</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<section id="services">
+<div class="container">
+<div class="section-title"><h2>Why Hire Me</h2><p>What makes me different from other developers</p></div>
+<div class="services-grid">
+<div class="service-card"><h3>⚡ Performance Focused</h3><p>Optimized queries and improved app performance significantly.</p></div>
+<div class="service-card"><h3>🧠 Problem Solver</h3><p>Built full-fledged HR & ATS solutions solving real-world business problems.</p></div>
+<div class="service-card"><h3>🔐 Secure & Scalable</h3><p>Secure authentication systems and scalable architecture expertise.</p></div>
+</div>
+</div>
+</section>
 
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <div class="section-title">
-                <h2>Get In Touch</h2>
-                <p>Feel free to contact me for any work or suggestions</p>
-            </div>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Phone</h3>
-                            <p>+91 9834229376</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Email</h3>
-                            <p>tusharkuhite123@gmail.com</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Location</h3>
-                            <p>Ahmedabad, India</p>
-                        </div>
-                    </div>
-                    <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-                <div class="contact-form">
-                    <form>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Your Name" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" class="form-control" placeholder="Your Email" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Subject">
-                        </div>
-                        <div class="form-group">
-                            <textarea class="form-control" placeholder="Your Message" required></textarea>
-                        </div>
-                        <button type="submit" class="btn">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
+<section id="projects">
+<div class="container">
+<div class="section-title"><h2>Projects</h2><p>Some of my recent work</p></div>
+<div class="projects-grid">
+<div class="project-card">
+<div class="project-img"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1170&q=80" alt="ATS Project"></div>
+<div class="project-content">
+<h3>Application Tracking System</h3>
+<p>Built recruitment management system handling job posts, applicants, interviews, and reports.</p>
+<div class="project-tags">
+<span class="project-tag">Laravel</span>
+<span class="project-tag">MySQL</span>
+<span class="project-tag">REST API</span>
+</div>
+</div>
+</div>
+<!-- Add more project cards similarly -->
+</div>
+</div>
+</section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-about">
-                    <div class="footer-logo">Tushar<span>.</span></div>
-                    <p>Laravel Web Developer specializing in building scalable web applications with modern technologies.</p>
-                    <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-                <div class="footer-links">
-                    <div class="footer-links-column">
-                        <h3>Quick Links</h3>
-                        <ul>
-                            <li><a href="#home">Home</a></li>
-                            <li><a href="#about">About</a></li>
-                            <li><a href="#services">Services</a></li>
-                            <li><a href="#projects">Projects</a></li>
-                            <li><a href="#contact">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-links-column">
-                        <h3>Services</h3>
-                        <ul>
-                            <li><a href="#">Web Development</a></li>
-                            <li><a href="#">API Development</a></li>
-                            <li><a href="#">Database Design</a></li>
-                            <li><a href="#">Consultation</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2023 Tushar Kuhite. All Rights Reserved.</p>
-            </div>
-        </div>
-    </footer>
+<section class="contact" id="contact">
+<div class="container">
+<div class="section-title"><h2>Get In Touch</h2><p>Contact me for work or collaboration</p></div>
+<div class="contact-content">
+<div class="contact-info">
+<div class="contact-item"><div class="contact-icon"><i class="fas fa-phone"></i></div><div class="contact-details"><h3>Phone</h3><p>+91 9834229376</p></div></div>
+<div class="contact-item"><div class="contact-icon"><i class="fas fa-envelope"></i></div><div class="contact-details"><h3>Email</h3><p>tusharkuhite123@gmail.com</p></div></div>
+<div class="contact-item"><div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div><div class="contact-details"><h3>Location</h3><p>Pune, Maharashtra, India</p></div></div>
+</div>
+<div class="contact-form">
+<form>
+<div class="form-group"><input type="text" class="form-control" placeholder="Your Name" required></div>
+<div class="form-group"><input type="email" class="form-control" placeholder="Your Email" required></div>
+<div class="form-group"><textarea class="form-control" placeholder="Your Message" required></textarea></div>
+<button class="btn">Send Message</button>
+</form>
+</div>
+</div>
+</div>
+</section>
 
-    <script>
-        // Header scroll effect
-        window.addEventListener('scroll', function() {
-            const header = document.getElementById('header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
+<footer>
+<div class="container">
+<div class="footer-content">
+<div class="footer-logo">Tushar<span>.</span></div>
+<div class="footer-links-column"><h3>Quick Links</h3><ul><li><a href="#home">Home</a></li><li><a href="#about">About</a></li><li><a href="#projects">Projects</a></li><li><a href="#contact">Contact</a></li></ul></div>
+<div class="footer-links-column"><h3>Social</h3><div class="social-links"><a href="#" class="social-link"><i class="fab fa-github"></i></a><a href="#" class="social-link"><i class="fab fa-linkedin"></i></a><a href="#" class="social-link"><i class="fab fa-twitter"></i></a></div></div>
+</div>
+<div class="copyright">&copy; 2026 Tushar Kuhite. All rights reserved.</div>
+</div>
+</footer>
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
+<script>
+// Mobile Menu
+const mobileMenu = document.querySelector('.mobile-menu');
+const navLinks = document.querySelector('.nav-links');
+mobileMenu.addEventListener('click', ()=>{ navLinks.classList.toggle('active'); });
+// Scroll Header
+const header = document.getElementById('header');
+window.addEventListener('scroll', ()=>{ window.scrollY>50?header.classList.add('scrolled'):header.classList.remove('scrolled'); });
+</script>
 
-        // Mobile menu toggle
-        const mobileMenu = document.querySelector('.mobile-menu');
-        const navLinks = document.querySelector('.nav-links');
-        
-        mobileMenu.addEventListener('click', function() {
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-        });
-
-        // Fade in animation on scroll
-        const fadeElements = document.querySelectorAll('.fade-in');
-        
-        const fadeInOnScroll = function() {
-            fadeElements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                const elementVisible = 150;
-                
-                if (elementTop < window.innerHeight - elementVisible) {
-                    element.classList.add('fade-in');
-                }
-            });
-        };
-        
-        window.addEventListener('scroll', fadeInOnScroll);
-        fadeInOnScroll(); // Initial check
-    </script>
 </body>
 </html>
